@@ -1,3 +1,4 @@
-Services
-
--CatalogAPI => 5011 -http://localhost:5011/swagger/index.html
+- Services
+	- CatalogAPI => 5011 -http://localhost:5011/swagger/index.html
+	- PhotoStockAPI => 5012 -http://localhost:5012/swagger/index.html
+- IdentityServer => 5001
