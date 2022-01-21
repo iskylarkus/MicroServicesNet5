@@ -1,0 +1,14 @@
+
+dotnet new -i identityserver4.templates
+
+cd D:\codes\repos\MicroServicesNet5\IdentityServer
+
+dotnet new is4aspid --name MicroServicesNet5.IdentityServer
+
+PM> add-migration initial
+
+PM> update-database
+
+PasswordHash
+SecurityStamp
+ConcurrencyStamp
