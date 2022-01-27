@@ -11,6 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroServicesNet5.Services.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{5842EBE1-E445-4D99-A712-C65B3EC7BEBD}"
 	ProjectSection(SolutionItems) = preProject
+		discount.sql = discount.sql
 		IdentityServer.txt = IdentityServer.txt
 		Ports.txt = Ports.txt
 	EndProjectSection
@@ -33,7 +34,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroServicesNet5.Services.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Discount", "Discount", "{B0783F13-3051-49BE-9CD0-FCDB404424ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroServicesNet5.Services.Discount", "Services\Discount\MicroServicesNet5.Services.Discount\MicroServicesNet5.Services.Discount.csproj", "{1BDA1B9C-23C2-4592-8028-9DD30437D04A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MicroServicesNet5.Services.Discount", "Services\Discount\MicroServicesNet5.Services.Discount\MicroServicesNet5.Services.Discount.csproj", "{1BDA1B9C-23C2-4592-8028-9DD30437D04A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
