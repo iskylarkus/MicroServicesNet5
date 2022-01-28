@@ -4,4 +4,9 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\MicroServicesNet5.Services.Order.Domain\MicroServicesNet5.Services.Order.Domain.csproj" />
+    <ProjectReference Include="..\MicroServicesNet5.Services.Order.Infrastructure\MicroServicesNet5.Services.Order.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
