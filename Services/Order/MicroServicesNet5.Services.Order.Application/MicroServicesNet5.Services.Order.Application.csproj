@@ -9,6 +9,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Shared\MicroServicesNet5.Shared\MicroServicesNet5.Shared.csproj" />
     <ProjectReference Include="..\MicroServicesNet5.Services.Order.Domain\MicroServicesNet5.Services.Order.Domain.csproj" />
     <ProjectReference Include="..\MicroServicesNet5.Services.Order.Infrastructure\MicroServicesNet5.Services.Order.Infrastructure.csproj" />
   </ItemGroup>
