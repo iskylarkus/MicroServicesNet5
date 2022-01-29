@@ -5,6 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\MicroServicesNet5.Services.Order.Domain\MicroServicesNet5.Services.Order.Domain.csproj" />
     <ProjectReference Include="..\MicroServicesNet5.Services.Order.Infrastructure\MicroServicesNet5.Services.Order.Infrastructure.csproj" />
   </ItemGroup>
