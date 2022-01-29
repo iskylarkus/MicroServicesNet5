@@ -1,6 +1,8 @@
-using MicroServicesNet5.Services.Catalog.Services;
-using MicroServicesNet5.Services.Catalog.Settings;
+using MicroServicesNet5.Services.Basket.Services;
+using MicroServicesNet5.Services.Basket.Settings;
+using MicroServicesNet5.Shared.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -13,10 +15,11 @@ using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace MicroServicesNet5.Services.Catalog
+namespace MicroServicesNet5.Services.Basket
 {
     public class Startup
     {
@@ -30,31 +33,45 @@ namespace MicroServicesNet5.Services.Catalog
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var requireAuthorizePolicy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub");
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
                 options.Authority = Configuration["IdentityServerURL"];
-                options.Audience = "resource_catalog";
+                options.Audience = "resource_basket";
                 options.RequireHttpsMetadata = false;
             });
 
 
-            services.AddScoped<ICategoryService, CategoryService>();
-            services.AddScoped<ICourseService, CourseService>();
+            services.AddHttpContextAccessor();
 
-            services.AddAutoMapper(typeof(Startup));
+            services.AddScoped<ISharedIdentityService, SharedIdentityService>();
+            
+            services.AddScoped<IBasketService, BasketService>();
+
+            services.Configure<RedisSettings>(Configuration.GetSection("RedisSettings"));
+
+            services.AddSingleton<RedisService>(sp =>
+            {
+                var redisSettings = sp.GetRequiredService<IOptions<RedisSettings>>().Value;
+
+                var redis = new RedisService(redisSettings.Host, redisSettings.Port);
+
+                redis.Connect();
+
+                return redis;
+            });
 
             services.AddControllers(opt =>
             {
-                opt.Filters.Add(new AuthorizeFilter());
+                opt.Filters.Add(new AuthorizeFilter(requireAuthorizePolicy));
             });
-
-            services.Configure<DatabaseSettings>(Configuration.GetSection("DatabaseSettings"));
-
-            services.AddSingleton<IDatabaseSettings>(sp => { return sp.GetRequiredService<IOptions<DatabaseSettings>>().Value; });
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "MicroServicesNet5.Services.Catalog", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "MicroServicesNet5.Services.Basket", Version = "v1" });
             });
         }
 
@@ -65,7 +82,7 @@ namespace MicroServicesNet5.Services.Catalog
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MicroServicesNet5.Services.Catalog v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "MicroServicesNet5.Services.Basket v1"));
             }
 
             app.UseRouting();
