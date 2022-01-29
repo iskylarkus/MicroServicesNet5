@@ -33,6 +33,8 @@ namespace MicroServicesNet5.Services.Catalog
                     categoryService.CreateAsync(new CategoryDto { Name = "Database Courses" }).Wait();
                 }
             }
+
+            host.Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
