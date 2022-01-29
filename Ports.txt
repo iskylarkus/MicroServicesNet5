@@ -6,3 +6,4 @@
 	- OrderAPI => 5015 -http://localhost:5015/swagger/index.html
 	- PaymentAPI => 5016 -http://localhost:5016/swagger/index.html
 - IdentityServer => 5001
+- Gateway => 5000
