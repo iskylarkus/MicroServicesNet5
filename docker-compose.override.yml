@@ -21,7 +21,7 @@ services:
       - discountdb_volume:/var/lib/postgresql/data
     environment:
       - POSTGRES_USER=admin
-      - POSTGRES_PASSWORD=Pasword12*
+      - POSTGRES_PASSWORD=Password12*
       - POSTGRES_DB=discountdb
   identitydb:
     container_name: identitydb
@@ -30,10 +30,10 @@ services:
     ports:
       - "1433:1433"
     volumes:
-      - identitydb_volume:/var/opt/mssql/data
+      - identitydb_volume:/var/opt/mssql
     environment:
       - ACCEPT_EULA=Y
-      - SA_PASSWORD=Pasword12*
+      - SA_PASSWORD=Password12*
   orderdb:
     container_name: orderdb
     restart: always
@@ -41,10 +41,10 @@ services:
     ports:
       - "1444:1433"
     volumes:
-      - orderdb_volume:/var/opt/mssql/data
+      - orderdb_volume:/var/opt/mssql
     environment:
       - ACCEPT_EULA=Y
-      - SA_PASSWORD=Pasword12*
+      - SA_PASSWORD=Password12*
   rabbitmq:
     container_name: rabbitmq
     restart: always
@@ -62,3 +62,12 @@ services:
       - "5011:80"
     depends_on:
       - catalogdb
+  identity.api:
+    container_name: identity_api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:DefaultConnection=Server=identitydb,1433;Database=identitydb;User=sa;Password=Password12*;"
+    ports:
+      - "5001:80"
+    depends_on:
+      - identitydb

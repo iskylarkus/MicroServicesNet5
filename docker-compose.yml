@@ -7,9 +7,9 @@ services:
   discountdb:
     image: postgres
   identitydb:
-    image: mcr.microsoft.com/mssql/server
+    image: mcr.microsoft.com/mssql/server:2019-latest
   orderdb:
-    image: mcr.microsoft.com/mssql/server
+    image: mcr.microsoft.com/mssql/server:2019-latest
   rabbitmq:
     image: rabbitmq:3.8.14-management
   catalog.api:
@@ -17,6 +17,11 @@ services:
     build:
       context: .
       dockerfile: Services/Catalog/MicroServicesNet5.Services.Catalog/Dockerfile
+  identity.api:
+    image: identity_api_image
+    build:
+      context: .
+      dockerfile: IdentityServer/MicroServicesNet5.IdentityServer/Dockerfile
 volumes:
   catalogdb_volume:
   discountdb_volume:
