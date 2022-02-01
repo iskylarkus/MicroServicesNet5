@@ -30,7 +30,7 @@ services:
     ports:
       - "1433:1433"
     volumes:
-      - identitydb_volume:/var/opt/mssql
+      - identitydb_volume:/var/opt/mssql/data
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=Password12*
@@ -41,9 +41,10 @@ services:
     ports:
       - "1444:1433"
     volumes:
-      - orderdb_volume:/var/opt/mssql
+      - orderdb_volume:/var/opt/mssql/data
     environment:
       - ACCEPT_EULA=Y
+      - MSSQL_PID=Developer
       - SA_PASSWORD=Password12*
   rabbitmq:
     container_name: rabbitmq
@@ -71,3 +72,6 @@ services:
       - "5001:80"
     depends_on:
       - identitydb
+
+# docker-compose up
+# docker-compose down
