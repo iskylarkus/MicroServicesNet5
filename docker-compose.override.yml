@@ -67,7 +67,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - IdentityServerURL=http://identity.api:5001
       - DatabaseSettings:ConnectionString=mongodb://catalogdb:27017
-      - RabbitMqUrl=rabbitmq
+      - RabbitMQUrl=rabbitmq
     ports:
       - "5011:80"
     depends_on:
@@ -104,6 +104,14 @@ services:
       - "5014:80"
     depends_on:
       - discountdb
+  payment.api:
+    container_name: payment.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - IdentityServerURL=http://identity.api:5001
+      - RabbitMQUrl=rabbitmq
+    ports:
+      - "5016:80"
 
 # docker-compose up
 # docker-compose down
