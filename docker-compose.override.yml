@@ -52,8 +52,17 @@ services:
     ports:
       - "5672:5672"
       - "15672:15672"
+  identity.api:
+    container_name: identity.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:DefaultConnection=Server=identitydb,1433;Database=identitydb;User=sa;Password=Password12*;"
+    ports:
+      - "5001:80"
+    depends_on:
+      - identitydb
   catalog.api:
-    container_name: catalog_api
+    container_name: catalog.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - IdentityServerURL=http://identity.api:5001
@@ -63,15 +72,17 @@ services:
       - "5011:80"
     depends_on:
       - catalogdb
-  identity.api:
-    container_name: identity_api
+  basket.api:
+    container_name: basket.api
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - "ConnectionStrings:DefaultConnection=Server=identitydb,1433;Database=identitydb;User=sa;Password=Password12*;"
+      - IdentityServerURL=http://identity.api:5001
+      - RedisSettings:Host=basketdb
+      - RedisSettings:Port=6379
     ports:
-      - "5001:80"
+      - "5013:80"
     depends_on:
-      - identitydb
+      - basketdb
 
 # docker-compose up
 # docker-compose down

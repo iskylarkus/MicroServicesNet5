@@ -12,16 +12,21 @@ services:
     image: mcr.microsoft.com/mssql/server:2019-latest
   rabbitmq:
     image: rabbitmq:3.8.14-management
-  catalog.api:
-    image: catalog_api_image
-    build:
-      context: .
-      dockerfile: Services/Catalog/MicroServicesNet5.Services.Catalog/Dockerfile
   identity.api:
     image: identity_api_image
     build:
       context: .
       dockerfile: IdentityServer/MicroServicesNet5.IdentityServer/Dockerfile
+  catalog.api:
+    image: catalog_api_image
+    build:
+      context: .
+      dockerfile: Services/Catalog/MicroServicesNet5.Services.Catalog/Dockerfile
+  basket.api:
+    image: basket_api_image
+    build:
+      context: .
+      dockerfile: Services/Basket/MicroServicesNet5.Services.Basket/Dockerfile
 volumes:
   catalogdb_volume:
   discountdb_volume:
