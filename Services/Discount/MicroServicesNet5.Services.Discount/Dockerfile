@@ -1,0 +1,12 @@
+FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim as build
+WORKDIR /app
+EXPOSE 80
+COPY Shared/MicroServicesNet5.Shared/*.csproj Shared/MicroServicesNet5.Shared/
+COPY Services/Discount/MicroServicesNet5.Services.Discount/*.csproj Services/Discount/MicroServicesNet5.Services.Discount/
+RUN dotnet restore Services/Discount/MicroServicesNet5.Services.Discount/*.csproj
+COPY . .
+RUN dotnet publish Services/Discount/MicroServicesNet5.Services.Discount/*.csproj -c Release -o out
+FROM mcr.microsoft.com/dotnet/aspnet:5.0-buster-slim as runtime
+WORKDIR /app
+COPY --from=build /app/out .
+ENTRYPOINT [ "dotnet", "MicroServicesNet5.Services.Discount.dll" ]

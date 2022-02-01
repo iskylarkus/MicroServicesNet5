@@ -1,0 +1,22 @@
+FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim as build
+WORKDIR /app
+EXPOSE 80
+COPY Shared/MicroServicesNet5.Shared/*.csproj Shared/MicroServicesNet5.Shared/
+
+COPY Services/Order/MicroServicesNet5.Services.Order.Domain.Core/*.csproj Services/Order/MicroServicesNet5.Services.Order.Domain.Core/
+
+COPY Services/Order/MicroServicesNet5.Services.Order.Domain/*.csproj Services/Order/MicroServicesNet5.Services.Order.Domain/
+
+COPY Services/Order/MicroServicesNet5.Services.Order.Infrastructure/*.csproj Services/Order/MicroServicesNet5.Services.Order.Infrastructure/
+
+COPY Services/Order/MicroServicesNet5.Services.Order.Application/*.csproj Services/Order/MicroServicesNet5.Services.Order.Application/
+
+COPY Services/Order/MicroServicesNet5.Services.Order.API/*.csproj Services/Order/MicroServicesNet5.Services.Order.API/
+
+RUN dotnet restore Services/Order/MicroServicesNet5.Services.Order.API/*.csproj
+COPY . .
+RUN dotnet publish Services/Order/MicroServicesNet5.Services.Order.API/*.csproj -c Release -o out
+FROM mcr.microsoft.com/dotnet/aspnet:5.0-buster-slim as runtime
+WORKDIR /app
+COPY --from=build /app/out .
+ENTRYPOINT [ "dotnet", "MicroServicesNet5.Services.Order.API.dll" ]
