@@ -99,7 +99,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - IdentityServerURL=http://identity.api:5001
-      - "ConnectionStrings:PostgreSql=User ID=admin; Password=Password12*; Server=discountdb; Port=5432; Database=discountdb; Integrated Security=true; Pooling=true;"
+      - "ConnectionStrings:PostgreSql=Server=discountdb;Port=5432;Database=discountdb;User ID=admin;Password=Password12*;Integrated Security=true;Pooling=true;"
     ports:
       - "5014:80"
     depends_on:
@@ -112,6 +112,17 @@ services:
       - RabbitMQUrl=rabbitmq
     ports:
       - "5016:80"
+  order.api:
+    container_name: order.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - IdentityServerURL=http://identity.api:5001
+      - "ConnectionStrings:DefaultConnection=Server=orderdb,1444;Database=orderdb;User=sa;Password=Password12*;"
+      - RabbitMQUrl=rabbitmq
+    ports:
+      - "5015:80"
+    depends_on:
+      - orderdb
 
 # docker-compose up
 # docker-compose down
