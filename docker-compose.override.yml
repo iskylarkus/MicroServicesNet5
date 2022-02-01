@@ -83,6 +83,17 @@ services:
       - "5013:80"
     depends_on:
       - basketdb
+  photostock.api:
+    container_name: photostock.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - IdentityServerURL=http://identity.api:5001
+    ports:
+      - "5012:80"
+    volumes:
+      - type: bind
+        source: D:\docker\photos
+        target: /app/wwwroot/photos
 
 # docker-compose up
 # docker-compose down

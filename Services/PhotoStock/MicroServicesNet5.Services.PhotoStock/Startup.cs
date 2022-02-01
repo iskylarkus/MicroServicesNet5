@@ -30,7 +30,7 @@ namespace MicroServicesNet5.Services.PhotoStock
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
             {
                 options.Authority = Configuration["IdentityServerURL"];
-                options.Audience = "resource_photo_stock";
+                options.Audience = "resource_photostock";
                 options.RequireHttpsMetadata = false;
             });
 

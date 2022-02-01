@@ -27,6 +27,11 @@ services:
     build:
       context: .
       dockerfile: Services/Basket/MicroServicesNet5.Services.Basket/Dockerfile
+  photostock.api:
+    image: photostock_api_image
+    build:
+      context: .
+      dockerfile: Services/PhotoStock/MicroServicesNet5.Services.PhotoStock/Dockerfile
 volumes:
   catalogdb_volume:
   discountdb_volume:
