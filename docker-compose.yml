@@ -47,6 +47,11 @@ services:
     build:
       context: .
       dockerfile: Services/Order/MicroServicesNet5.Services.Order.API/Dockerfile
+  gateway.api:
+    image: gateway_api_image
+    build:
+      context: .
+      dockerfile: Gateways/MicroServicesNet5.Gateway/Dockerfile
 volumes:
   catalogdb_volume:
   discountdb_volume:
