@@ -1,4 +1,7 @@
 using MicroServicesNet5.Web.Models;
+using MicroServicesNet5.Web.Services;
+using MicroServicesNet5.Web.Services.Interfaces;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -23,9 +26,21 @@ namespace MicroServicesNet5.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHttpContextAccessor();
+
+            services.AddHttpClient<IIdentityService, IdentityService>();
+
             services.Configure<ServiceApiSettings>(Configuration.GetSection("ServiceApiSettings"));
 
             services.Configure<ClientSettings>(Configuration.GetSection("ClientSettings"));
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, opts =>
+            {
+                opts.LoginPath = "/Auth/SignIn";
+                opts.ExpireTimeSpan = TimeSpan.FromDays(60);
+                opts.SlidingExpiration = true;
+                opts.Cookie.Name = "MicroServiceNet5WebCookie";
+            });
 
             services.AddControllersWithViews();
         }
@@ -44,6 +59,8 @@ namespace MicroServicesNet5.Web
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
