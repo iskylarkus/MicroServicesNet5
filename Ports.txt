@@ -7,3 +7,4 @@
 	- PaymentAPI => 5016 -http://localhost:5016/swagger/index.html
 - IdentityServer => 5001
 - Gateway => 5000
+- Web => 5010
